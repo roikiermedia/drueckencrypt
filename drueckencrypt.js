@@ -21,6 +21,10 @@ function parseDomains(nginxConf, callback) {
 
   var server_name = nginxConf.substring(start, end);
   var domains = server_name.split(" ");
+
+  console.log("Domains:");
+  domains.forEach(logArray);
+
   callback(domains);
 
 }
@@ -37,4 +41,8 @@ function nginx() {
 
   };
 
+}
+
+function logArray(element, index) {
+  console.log(element);
 }
