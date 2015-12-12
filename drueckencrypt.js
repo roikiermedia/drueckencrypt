@@ -1,6 +1,7 @@
 var child_process = require('child_process');
 
 var letsEncrypt = "/root/letsencrypt/letsencrypt-auto"
+var nginxConfPath = "/etc/nginx/conf.d/";
 
 function renewCerts(domains, callback) {
   //var domains = array of domains to be renewed
@@ -14,7 +15,7 @@ function renewCerts(domains, callback) {
 
 function parseDomains(nginxConf, callback) {
   //search "server_name example.com www.example.com" and extract domains
-  //var nginxConf = string of site conf in /etc/nginx/conf.d/
+  //var nginxConf = string of single site conf
   var start = (nginxConf.indexOf("server_name") + 12);
   var end = (nginxConf.substring(start).indexOf(";"));
 
