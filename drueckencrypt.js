@@ -13,9 +13,9 @@ function renewCerts(domains, callback) {
     var domainArg = domains.join(" -d ");
     var letsEncryptArg = letsEncrypt + " certonly --renew-by-default -d " + domainArg;
 
-    nginx.stop;
+    child_process.execSync("service nginx stop");
     child_process.execSync(letsEncryptArg);
-    nginx.start;
+    child_process.execSync("service nginx start");
 
     console.log("Cert issued.");
     callback();
