@@ -1,3 +1,4 @@
+var fs = require('fs');
 var child_process = require('child_process');
 
 var letsEncrypt = "/root/letsencrypt/letsencrypt-auto";
@@ -48,3 +49,27 @@ function nginx() {
 function logArray(element, index) {
   console.log(element);
 }
+
+function main() {
+  var nginxConfs = fs.readdirSync(nginxConfPath);
+
+  console.log("nginx SiteConfs:");
+  nginxConfs.forEach(logArray);
+
+  nginx.stop;
+
+  nginxConfs.forEach(function (element, index) {
+    fs.readFile(nginxConfPath + element, "utf8", function (err, data) {
+      if (err) throw err;
+      parseDomains(data, renewCerts);
+
+    });
+
+  });
+
+  nginx.start;
+  console.log("Fin.");
+
+}
+
+main;
