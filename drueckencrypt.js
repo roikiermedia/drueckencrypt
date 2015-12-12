@@ -8,7 +8,7 @@ function renewCerts(domains) {
   //var domains = array of domains to be renewed
   if (domains == null) {
     //skip cert renewel w/ unsupported confs
-    callback;
+    console.log("Skipping this Conf.");
   }
   else {
     var domainArg = domains.join(" -d ");
