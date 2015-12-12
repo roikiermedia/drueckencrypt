@@ -7,6 +7,7 @@ var nginxConfPath = "/etc/nginx/conf.d/";
 function renewCerts(domains) {
   //var domains = array of domains to be renewed
   if (domains == null) {
+    //skip cert renewel w/ unsupported confs
     callback;
   }
   else {
@@ -30,6 +31,7 @@ function parseDomains(nginxConf, callback) {
   var end = (nginxConf.indexOf(";", start));
 
   if (nginxConf.indexOf("server_name") == -1) {
+    //ignore all confs w/o domains
     var domains = null;
     callback(domains);
 
@@ -38,10 +40,20 @@ function parseDomains(nginxConf, callback) {
     var server_name = nginxConf.substring(start, end);
     var domains = server_name.split(" ");
 
-    console.log("Domains:");
-    domains.forEach(logArray);
+    if (server_name.indexOf("*") != -1) {
+      //ignore all confs w/ unsupported wildcard domains
+      console.log("Confs with Wildcard Domains (*.example.com) are ignored. Remove all Wildcards and restart the process.");
+      var domains = null;
+      callback(domains);
 
-    callback(domains);
+    }
+    else {
+      console.log("Domains:");
+      domains.forEach(logArray);
+
+      callback(domains);
+
+    }
 
   }
 
