@@ -6,6 +6,8 @@ var nginxConfPath = "/etc/nginx/conf.d/";
 
 function renewCerts(domains, callback) {
   //var domains = array of domains to be renewed
+  if (domains = null) callback;
+
   var domainArg = domains.join(" -d ");
   var letsEncryptArg = letsEncrypt + " certonly --renew-by-default -d " + domainArg;
 
@@ -21,6 +23,11 @@ function parseDomains(nginxConf, callback) {
   //var nginxConf = string of single site conf
   var start = (nginxConf.indexOf("server_name") + 12);
   var end = (nginxConf.substring(start).indexOf(";"));
+
+  if (nginxConf.indexOf("server_name") == -1) {
+    var domains = null;
+    callback(domains);
+  }
 
   var server_name = nginxConf.substring(start, end);
   var domains = server_name.split(" ");
