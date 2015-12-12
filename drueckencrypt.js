@@ -13,9 +13,11 @@ function renewCerts(domains, callback) {
     var domainArg = domains.join(" -d ");
     var letsEncryptArg = letsEncrypt + " certonly --renew-by-default -d " + domainArg;
 
+    nginx.stop;
     child_process.execSync(letsEncryptArg);
-    console.log("Cert issued.");
+    nginx.start;
 
+    console.log("Cert issued.");
     callback();
 
   }
@@ -70,8 +72,6 @@ function main() {
   console.log("nginx SiteConfs:");
   nginxConfs.forEach(logArray);
 
-  nginx.stop;
-
   nginxConfs.forEach(function (element, index) {
     fs.readFile(nginxConfPath + element, "utf8", function (err, data) {
       if (err) throw err;
@@ -80,9 +80,6 @@ function main() {
     });
 
   });
-
-  nginx.start;
-  console.log("Fin.");
 
 }
 
