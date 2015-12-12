@@ -61,7 +61,7 @@ function main() {
   nginxConfs.forEach(function (element, index) {
     fs.readFile(nginxConfPath + element, "utf8", function (err, data) {
       if (err) throw err;
-      parseDomains(data, renewCerts());
+      parseDomains(data, renewCerts);
 
     });
 
