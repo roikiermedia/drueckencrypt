@@ -59,7 +59,7 @@ function main() {
   nginx.stop;
 
   nginxConfs.forEach(function (element, index) {
-    fs.readFileSync(nginxConfPath + element, "utf8", function (err, data) {
+    fs.readFile(nginxConfPath + element, "utf8", function (err, data) {
       if (err) throw err;
       parseDomains(data, renewCerts());
 
