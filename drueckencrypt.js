@@ -9,14 +9,16 @@ function renewCerts(domains, callback) {
   if (domains = null) {
     callback;
   }
+  else {
+    var domainArg = domains.join(" -d ");
+    var letsEncryptArg = letsEncrypt + " certonly --renew-by-default -d " + domainArg;
 
-  var domainArg = domains.join(" -d ");
-  var letsEncryptArg = letsEncrypt + " certonly --renew-by-default -d " + domainArg;
+    child_process.execSync(letsEncryptArg);
+    console.log("Cert issued.");
 
-  child_process.execSync(letsEncryptArg);
-  console.log("Cert issued.");
+    callback();
 
-  callback();
+  }
 
 }
 
@@ -29,15 +31,18 @@ function parseDomains(nginxConf, callback) {
   if (nginxConf.indexOf("server_name") == -1) {
     var domains = null;
     callback(domains);
+
   }
+  else {
+    var server_name = nginxConf.substring(start, end);
+    var domains = server_name.split(" ");
 
-  var server_name = nginxConf.substring(start, end);
-  var domains = server_name.split(" ");
+    console.log("Domains:");
+    domains.forEach(logArray);
 
-  console.log("Domains:");
-  domains.forEach(logArray);
+    callback(domains);
 
-  callback(domains);
+  }
 
 }
 
