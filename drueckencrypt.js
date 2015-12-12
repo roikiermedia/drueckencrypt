@@ -9,6 +9,8 @@ function renewCerts(domains, callback) {
   var letsEncryptArg = letsEncrypt + " certonly --renew-by-default -d " + domainArg;
 
   child_process.execSync(letsEncryptArg);
+  console.log("Cert issued.");
+
   callback();
 
 }
