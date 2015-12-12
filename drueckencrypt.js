@@ -1,6 +1,6 @@
 var child_process = require('child_process');
 
-var letsEncrypt = "/root/letsencrypt/letsencrypt-auto"
+var letsEncrypt = "/root/letsencrypt/letsencrypt-auto";
 var nginxConfPath = "/etc/nginx/conf.d/";
 
 function renewCerts(domains, callback) {
