@@ -9,3 +9,13 @@ function renewCerts(domains, callback) {
   callback();
 
 }
+function nginx() {
+  this.start = function() {
+    child_process.execSync(service nginx start);
+    console.log("nginx started");
+  };
+  this.stop = function() {
+    child_process.execSync(service nginx stop);
+    console.log("nginx stoped");
+  };
+}
