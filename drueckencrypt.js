@@ -26,7 +26,7 @@ function parseDomains(nginxConf, callback) {
   //search "server_name example.com www.example.com" and extract domains
   //var nginxConf = string of single site conf
   var start = (nginxConf.indexOf("server_name") + 12);
-  var end = (nginxConf.substring(start).indexOf(";"));
+  var end = (nginxConf.indexOf(";", start));
 
   if (nginxConf.indexOf("server_name") == -1) {
     var domains = null;
