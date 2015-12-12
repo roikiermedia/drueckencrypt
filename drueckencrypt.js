@@ -9,6 +9,19 @@ function renewCerts(domains, callback) {
   callback();
 
 }
+
+function parseDomains(nginxConf, callback) {
+  //search "server_name example.com www.example.com" and extract domains
+  //var nginxConf = string of site conf in /etc/nginx/conf.d/
+  var start = (nginxConf.indexOf("server_name") + 12);
+  var end = (nginxConf.substring(start).indexOf(";"));
+
+  var server_name = nginxConf.substring(start, end);
+  var domains = server_name.split(" ");
+  callback(domains);
+
+}
+
 function nginx() {
   this.start = function() {
     child_process.execSync(service nginx start);
