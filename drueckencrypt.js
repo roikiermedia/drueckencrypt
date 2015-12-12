@@ -6,7 +6,9 @@ var nginxConfPath = "/etc/nginx/conf.d/";
 
 function renewCerts(domains, callback) {
   //var domains = array of domains to be renewed
-  if (domains = null) callback;
+  if (domains = null) {
+    callback;
+  }
 
   var domainArg = domains.join(" -d ");
   var letsEncryptArg = letsEncrypt + " certonly --renew-by-default -d " + domainArg;
